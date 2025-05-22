@@ -1,0 +1,66 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug Payments Engine",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=payments_engine",
+                    "--package=payments_engine"
+                ],
+                "filter": {
+                    "name": "payments_engine",
+                    "kind": "bin"
+                }
+            },
+            "args": [ "transactions.csv" ],
+            "cwd": "${workspaceFolder}",
+            "env": { "RUST_LOG": "debug" }
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug CLI Integration Validation",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=payments_engine",
+                    "--package=payments_engine"
+                ],
+                "filter": {
+                    "name": "payments_engine",
+                    "kind": "bin"
+                }
+            },
+            "args": [ "transactions.csv" ],
+            "cwd": "${workspaceFolder}",
+            "env": { "RUST_LOG": "debug" }
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug Unit Tests",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=payments_engine",
+                    "--package=payments_engine"
+                ],
+                "filter": {
+                    "name": "payments_engine",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

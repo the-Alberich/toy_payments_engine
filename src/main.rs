@@ -33,8 +33,7 @@ fn main() -> Result<(), error::ApplicationError> {
 
     // Prepare a buffer to collect (row_index, raw_line, error_message)
     let mut errors: Vec<(usize, String, String)> = Vec::new();
-    let mut index = 0;
-    for result in reader.deserialize::<TransactionRecord>() {
+    for (index, result) in reader.deserialize::<TransactionRecord>().enumerate() {
         match result {
             Ok(record) => {
                 // Try to process; on Err, collect and continue
@@ -55,13 +54,12 @@ fn main() -> Result<(), error::ApplicationError> {
                 ));
             }
         }
-        index += 1;
     }
 
     // Output results to CSV on stdout
     let mut writer = Writer::from_writer(std::io::stdout());
     // Write header
-    writer.write_record(&["client", "available", "held", "total", "locked"])?;
+    writer.write_record(["client", "available", "held", "total", "locked"])?;
     // Sort client IDs for deterministic output
     let mut client_ids: Vec<u16> = engine.accounts.keys().cloned().collect();
     client_ids.sort_unstable();

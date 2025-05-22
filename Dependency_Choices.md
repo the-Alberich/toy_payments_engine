@@ -187,7 +187,7 @@ This document outlines chosen crates and rationale for the payments engine.
 
 ---
 
-### 7. Continuous Integration (Optional)
+### 7. Continuous Integration (Not Implemented Yet)
 
   Continuous Integration is a nice-to-have if time permits. In production quality projects, I'd expect to ensure code quality and consistency across commits. It's a bit overkill for this task, but in terms of next steps I would take if this task were a real-life project, CI would probably be first among them.
 
@@ -205,8 +205,9 @@ This document outlines chosen crates and rationale for the payments engine.
 #### **Decision**
   Add basic CI with GitHub Actions if time allows; otherwise, omit as non-critical.
 
+---
 
-### 8. Benchmarking (Optional)
+### 8. Benchmarking (Not Implemented Yet)
 
 #### **Best Option: `criterion`**
   * Statistically rigorous measurements (warm-up, multiple samples, outlier rejection)

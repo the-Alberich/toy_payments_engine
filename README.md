@@ -28,7 +28,7 @@ This repository contains a simple payments engine implemented in Rust. It reads 
 1. Clone this repo:
 
    ```bash
-   git clone <url>
+   git clone https://github.com/the-Alberich/toy_payments_engine
    cd payments-engine
    ```
 2. Build:

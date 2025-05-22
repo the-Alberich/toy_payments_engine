@@ -1,6 +1,6 @@
 # Dependency Choices
 
-This document outlines chosen crates and rationale for the payments engine.
+This document outlines chosen crates and rationale for the toy payments engine.
 
 ---
 
@@ -146,7 +146,7 @@ This document outlines chosen crates and rationale for the payments engine.
   Use `thiserror` for concise, compile-time error types, seamless `?`-based propagation, and maintainable error messages.
 
 #### **Details**
-  I selected `thiserror` because it allows defining a strongly-typed `enum ApplicationError` with minimal boilerplate. The `#[error("...")]` macro generates `Display` implementations, the `#[from]` attribute auto-implements conversions from underlying errors (`std::io::Error`, `csv::Error`, etc.), and the `#[source]` attribute enables standard error chaining so you retain the context of inner causes. Alternatives like `anyhow` trade type safety for convenience, `snafu` adds complexity, `error-chain` is deprecated, and rolling your own error types would be verbose and error-prone.
+  I selected `thiserror` because it allows defining a strongly-typed `enum ApplicationError` with minimal boilerplate. The `#[error("...")]` macro generates `Display` implementations, the `#[from]` attribute auto-implements conversions from underlying errors (`std::io::Error`, `csv::Error`, etc.), and the `#[source]` attribute enables standard error chaining so you retain the context of inner causes. Alternatives like `anyhow` trade type safety for convenience, `snafu` adds complexity, `error-chain` is deprecated, and building error types from scratch would be verbose and error-prone.
 
 ---
 
@@ -183,7 +183,7 @@ This document outlines chosen crates and rationale for the payments engine.
 #### **Details**
   It makes sense to use Rust’s native test framework augmented by `rstest` to define parameterized unit tests. With little effort repetitive code for similar Unit Test cases can be reduced. For full CLI Integration Tests, `assert_cmd` alongside `predicates` can execute the binary in a controlled environment and verify both CSV output and log behavior. This approach strikes a balance between simplicity, test coverage, readability and maintainability. Property-based frameworks like `proptest` offer deeper fuzzing but add complexity, while snapshot tools like `insta` can break on innocuous formatting changes; opting for `rstest` for Unit Tests and `assert_cmd` + `predicates` for Integration Tests ensures predictable, easy-to-understand tests without heavy dependencies.
 
-  I also considered adding something like `logtest` to validate expected errors and warnings in Unit Tests. It might make sense in a production-grade project, but I'm considering it out of scope for this task, so I didn't list alternatives or a full description.
+  I also considered adding something like `logtest` to validate expected errors and warnings in Unit Tests. It might make sense in a production-grade project, but I'm considering it out of scope for now, so I didn't list alternatives or a full description.
 
 ---
 
@@ -200,7 +200,7 @@ This document outlines chosen crates and rationale for the payments engine.
   * Run `cargo test` to validate functionality
 
 #### **Alternatives**
-  Other CI services like Travis CI, CircleCI, and GitLab CI exist, but since this submission is on GitHub, integrating with GitHub Actions is the most seamless option and avoids external tooling.
+  Other CI services like Travis CI, CircleCI, and GitLab CI exist, but since this code lives on GitHub, integrating with GitHub Actions is the most seamless option and avoids external tooling.
 
 #### **Decision**
   Add basic CI with GitHub Actions if time allows; otherwise, omit as non-critical.
@@ -229,9 +229,9 @@ This document outlines chosen crates and rationale for the payments engine.
     * *Cons:* No automated performance validation or regression detection.
 
 #### **Decision**
-  Skip detailed benchmarking for this challenge due to time constraints; prioritize correctness, maintainability, and comprehensive testing.
+  Skip detailed benchmarking for now to prioritize correctness, maintainability, and comprehensive testing.
 
 #### **Details**
-  Although benchmarks can validate performance claims and detect regressions, for a 2–3 hour take-home task it’s more important to implement core features and tests. In a production setting, I would use `criterion` to establish performance baselines, compare implementations, and generate HTML reports. Criterion’s statistical rigor and reporting tools make it the standard for Rust benchmarking, but here it’s an optional enhancement rather than a requirement.
+  Although benchmarks can validate performance claims and detect regressions, for this task it’s more important to implement core features and tests. In a production setting, I would use `criterion` to establish performance baselines, compare implementations, and generate HTML reports. Criterion’s statistical rigor and reporting tools make it the standard for Rust benchmarking, but here it’s an optional enhancement rather than a requirement.
 
 ---
